@@ -45,6 +45,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Running the docker container
+
+```bash
+# environments variables by .env
+$ docker-compose up --build -d
+```
+
 ## Test
 
 ```bash

@@ -14,7 +14,10 @@ import * as Joi from 'joi';
       isGlobal: true,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().required(),
-        NODE_PORT: Joi.number().required(),
+        HTTP_PORT: Joi.number().required(),
+        HTTPS_PORT: Joi.number().required(),
+        SSL_CERT_PATH: Joi.string(),
+        SSL_KEY_PATH: Joi.string(),
       }),
     }),
   ],

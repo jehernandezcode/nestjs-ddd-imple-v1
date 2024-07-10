@@ -9,7 +9,6 @@ export class AppService {
   ) {}
 
   getHello(): string {
-    console.log(this.configService.node_config);
     return 'Hello World!';
   }
 }
