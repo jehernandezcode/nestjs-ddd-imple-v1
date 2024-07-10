@@ -7,9 +7,10 @@ services:
       - '${HTTP_PORT}:${HTTP_PORT}'
       - '${HTTPS_PORT}:${HTTPS_PORT}'
     environment:
-      - NODE_ENV='${NODE_ENV}'
-      - SSL_KEY_PATH='${SSL_KEY_PATH}'
+      - NODE_ENV=${NODE_ENV}
+      - HTTP_PORT=${HTTP_PORT}
+      - HTTPS_PORT=${HTTPS_PORT}
+      - SSL_KEY_PATH=${SSL_KEY_PATH}
       - SSL_CERT_PATH=${SSL_CERT_PATH}
     volumes:
       - ./ssl:/app/ssl:ro
-    # Puedes agregar más variables de entorno según las necesidades de tu aplicación

@@ -19,8 +19,5 @@ RUN npm run build
 # Crea un directorio para los certificados SSL
 RUN mkdir -p /app/ssl
 
-# Expone los puertos HTTP y HTTPS
-EXPOSE 3000 443
-
 # Comando para ejecutar la aplicación
-CMD ["npm", "run", "start:dev"]
+CMD ["node", "dist/main.js"]

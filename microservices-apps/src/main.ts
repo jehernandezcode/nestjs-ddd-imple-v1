@@ -17,6 +17,7 @@ async function bootstrap() {
       .listen(process.env.HTTPS_PORT);
   } else {
     app.enableCors();
+    console.log('Server is runnig port', process.env.HTTP_PORT);
     await app.listen(process.env.HTTP_PORT || 3000);
   }
 }
