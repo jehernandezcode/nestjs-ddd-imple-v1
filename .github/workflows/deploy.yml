@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: aws-ec2
+    runs-on: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
