@@ -32,6 +32,5 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 400 private_key 'echo "1 - private key successful"'
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key 'echo "1 - private key successful"'
         scp -i private_key -o StrictHostKeyChecking=no -r ./* ${USER}@${HOST}:/home/${USER}/app 'echo "2 - copy ssh successful"'
-        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} 'echo "3 - shh conect successful"'
