@@ -38,6 +38,7 @@ jobs:
         scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
         ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
           cd /home/${USER}/app
+          echo "${{env.NODE_ENV}}"
           echo "NODE_ENV=${{ env.NODE_ENV }}" > .env
           echo "HTTP_PORT=${{ env.HTTP_PORT }}" >> .env
         '
