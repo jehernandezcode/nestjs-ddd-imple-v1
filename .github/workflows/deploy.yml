@@ -32,5 +32,7 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USER: ${{ secrets.USER }}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        echo "$PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} 'mkdir -p /home/${USER}/app'
         scp -i private_key -o StrictHostKeyChecking=no -r ./* ${USER}@${HOST}:/home/${USER}/app
