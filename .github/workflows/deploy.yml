@@ -9,14 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+        
+    - name: Generate .env file
+      run: |
+        echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> $GITHUB_ENV
+        echo "HTTP_PORT=${{ secrets.HTTP_PORT }}" >> $GITHUB_ENV
+        echo "HTTPS_PORT=${{ secrets.HTTPS_PORT }}" >> $GITHUB_ENV
+        echo "SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> $GITHUB_ENV
+        echo "SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> $GITHUB_ENV
 
     - name: Copy files to EC2
       env:
@@ -25,4 +33,5 @@ jobs:
         USER: ${{ secrets.USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
+        scp -i private_key -o StrictHostKeyChecking=no -r ./* ${USER}@${HOST}:/home/${USER}/app
+        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST}
