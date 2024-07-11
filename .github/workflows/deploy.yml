@@ -36,9 +36,9 @@ jobs:
         chmod 600 private_key
         ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} 'mkdir -p /home/${USER}/app'
         scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
-        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} "
+        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
           cd /home/${USER}/app;
-          echo pwd;
+          echo "$(pwd)";
           echo "${{env.NODE_ENV}}";
-          echo "HTTP_PORT=${{ env.HTTP_PORT }}" >> .env
-          "
+          echo "HTTP_PORT=${{ env.HTTP_PORT }}" > .env
+          '
