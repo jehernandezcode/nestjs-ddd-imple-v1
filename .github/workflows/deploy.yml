@@ -39,7 +39,7 @@ jobs:
         scp -i private_key -o StrictHostKeyChecking=no .env ${USER}@${HOST}:/home/${USER}/app/.env
 
   deploy:
-    needs: copy
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
