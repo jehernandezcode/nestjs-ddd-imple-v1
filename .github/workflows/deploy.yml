@@ -39,5 +39,5 @@ jobs:
         scp -i private_key -o StrictHostKeyChecking=no .env ${USER}@${HOST}:/home/${USER}/app/.env
         ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
           cd /home/${USER}/app;
-          docker-compose --env-file .env up -d
+          npm run docker:dev
           '
