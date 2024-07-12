@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -18,11 +18,26 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
+    - name: Create temporary .env file
+      run: |
+        echo "NODE_ENV=${{ secrets.NODE_ENV }}" > .env
+        echo "HTTP_PORT=${{ secrets.HTTP_PORT }}" >> .env
+        echo "HTTPS_PORT=${{ secrets.HTTPS_PORT }}" >> .env
+        echo "SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> .env
+        echo "SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> .env
+
     - name: Copy files to EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        HOST: ec2-54-198-206-104.compute-1.amazonaws.com
-        USER: ubuntu
+        HOST: ${{ secrets.HOST }}
+        USER: ${{ secrets.USER }}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        scp -i private_key -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
+        echo "$PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} 'mkdir -p /home/${USER}/app'
+        scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
+        scp -i private_key -o StrictHostKeyChecking=no .env ${USER}@${HOST}:/home/${USER}/app/.env
+        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
+          cd /home/${USER}/app;
+          npm run docker:dev
+          '
