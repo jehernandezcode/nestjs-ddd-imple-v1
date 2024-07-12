@@ -39,10 +39,5 @@ jobs:
         scp -i private_key -o StrictHostKeyChecking=no .env ${USER}@${HOST}:/home/${USER}/app/.env
         ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
           cd /home/${USER}/app;
-          echo "Contenido del directorio:";
-          ls -la;
-          echo "Contenido del archivo .env:";
-          cat .env;
-          echo "Permisos del archivo .env:";
-          ls -l .env;
+          npm run docker:dev
           '
