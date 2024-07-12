@@ -20,9 +20,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docker:dev": "docker-compose --env-file .env up -d",
-    "docker:stag": "docker-compose --env-file .stag.env up -d",
-    "docker:prod": "docker-compose --env-file .prod.env up -d"
+    "docker:dev": "docker-compose --env-file .env up -d --build",
+    "docker:stag": "docker-compose --env-file .stag.env up -d --build",
+    "docker:prod": "docker-compose --env-file .prod.env up -d --build"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
