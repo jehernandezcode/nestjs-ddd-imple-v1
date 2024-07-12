@@ -17,14 +17,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-        
-    - name: Generate .env file
-      run: |
-        echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> $GITHUB_ENV
-        echo "HTTP_PORT=${{ secrets.HTTP_PORT }}" >> $GITHUB_ENV
-        echo "HTTPS_PORT=${{ secrets.HTTPS_PORT }}" >> $GITHUB_ENV
-        echo "SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> $GITHUB_ENV
-        echo "SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> $GITHUB_ENV
 
     - name: Copy files to EC2
       env:
@@ -38,7 +30,9 @@ jobs:
         scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
         ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
           cd /home/${USER}/app;
-          echo "$(pwd)";
-          echo "${{env.NODE_ENV}}";
-          echo "HTTP_PORT=${{ env.HTTP_PORT }}" > .env
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" > .env
+          echo "HTTP_PORT=${{ secrets.HTTP_PORT }}" >> .env
+          echo "HTTPS_PORT=${{ secrets.HTTPS_PORT }}" >> .env
+          echo "SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> .env
+          echo "SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> .env
           '
