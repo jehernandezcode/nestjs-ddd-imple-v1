@@ -12,16 +12,21 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: List files for debugging
+      run: ls -la /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1
+
     - name: Use Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '>=20.9.0'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
+      working-directory: /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1
 
     - name: Run tests
       run: npm test
+      working-directory: /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1
 
   build:
     needs: test
