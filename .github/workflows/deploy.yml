@@ -1,81 +1,78 @@
-name: Copy and Deploy to EC2
+name: CI/CD Pipeline
 
 on:
+  pull_request:
+    branches: [main]
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: List files for debugging
-      run: ls -la /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ">=20.9.0"
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '>=20.9.0'
+      - name: Install dependencies
+        run: npm install
+        working-directory: /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1/microservices-apps
 
-    - name: Install dependencies
-      run: npm install
-      working-directory: /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1/microservices-apps
-
-    - name: Run tests
-      run: npm test
-      working-directory: /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1/microservices-apps
+      - name: Run tests
+        run: npm test
+        working-directory: /home/runner/work/nestjs-ddd-imple-v1/nestjs-ddd-imple-v1/microservices-apps
 
   build:
     needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-    - name: Create temporary .env file
-      run: |
-        echo "NODE_ENV=${{ secrets.NODE_ENV }}" > .env
-        echo "HTTP_PORT=${{ secrets.HTTP_PORT }}" >> .env
-        echo "HTTPS_PORT=${{ secrets.HTTPS_PORT }}" >> .env
-        echo "SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> .env
-        echo "SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> .env
+      - name: Create temporary .env file
+        run: |
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" > .env
+          echo "HTTP_PORT=${{ secrets.HTTP_PORT }}" >> .env
+          echo "HTTPS_PORT=${{ secrets.HTTPS_PORT }}" >> .env
+          echo "SSL_KEY_PATH=${{ secrets.SSL_KEY_PATH }}" >> .env
+          echo "SSL_CERT_PATH=${{ secrets.SSL_CERT_PATH }}" >> .env
 
-    - name: Copy files to EC2
-      env:
-        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        HOST: ${{ secrets.HOST }}
-        USER: ${{ secrets.USER }}
-      run: |
-        echo "$PRIVATE_KEY" > private_key
-        chmod 600 private_key
-        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} 'mkdir -p /home/${USER}/app'
-        scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
-        scp -i private_key -o StrictHostKeyChecking=no .env ${USER}@${HOST}:/home/${USER}/app/.env
+      - name: Copy files to EC2
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
+        run: |
+          echo "$PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} 'mkdir -p /home/${USER}/app'
+          scp -i private_key -o StrictHostKeyChecking=no -r ./microservices-apps/* ${USER}@${HOST}:/home/${USER}/app
+          scp -i private_key -o StrictHostKeyChecking=no .env ${USER}@${HOST}:/home/${USER}/app/.env
 
   deploy:
     needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     steps:
-    - name: Deploy to EC2
-      env:
-        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        HOST: ${{ secrets.HOST }}
-        USER: ${{ secrets.USER }}
-      run: |
-        echo "$PRIVATE_KEY" > private_key
-        chmod 600 private_key
-        ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
-          cd /home/${USER}/app
-          npm run docker:dev
-        '
+      - name: Deploy to EC2
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
+        run: |
+          echo "$PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
+            cd /home/${USER}/app
+            npm run docker:dev
+          '
