@@ -26,6 +26,18 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Tech Stack
+
+**Client:** Http (Chrome, Edge, ...), Postman
+
+**Server:** Node, NestJs
+
+**Cloud:** AWS (Ec2)
+
+**Repository:** Github
+
+**CI/CD:** Github Actions
+
 ## Installation
 
 ```bash

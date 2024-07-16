@@ -28,7 +28,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World the test!');
+      expect(appController.getHello()).toBe('Hello World!');
       expect(appService.getHello).toHaveBeenCalled();
     });
   });
