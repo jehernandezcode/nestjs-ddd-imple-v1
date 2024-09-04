@@ -4,7 +4,7 @@ import {
   IUserService,
   IUserServiceToken,
 } from '../../../domain/user/interface/IUserService';
-import { IFindUserByIdUseCase } from '../interfaces/IFindUserByIdUseCase';
+import { IFindUserByIdUseCase } from '../interfaces/Ifind-user-by-id-use-case';
 
 @Injectable()
 export class FindUserByIdUseCase implements IFindUserByIdUseCase {

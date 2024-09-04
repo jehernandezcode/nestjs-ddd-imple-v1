@@ -4,7 +4,7 @@ import {
   IUserService,
   IUserServiceToken,
 } from '../../../domain/user/interface/IUserService';
-import { IUpdateUserCase } from '../interfaces/IUpdateUserCase';
+import { IUpdateUserCase } from '../interfaces/Iupdate-user-case';
 import { UpdateUserDtoRequest } from '../dto/user-dto.request';
 
 @Injectable()

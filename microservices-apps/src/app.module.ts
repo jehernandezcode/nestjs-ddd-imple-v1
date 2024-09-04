@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { enviroments } from './environments';
-import config from './config';
 import * as Joi from 'joi';
+
+import config from './config';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
 import { InfraestructureModule } from './infraestructure/infraestructure.module';
+import { enviroments } from './environments';
 
 @Module({
   imports: [
