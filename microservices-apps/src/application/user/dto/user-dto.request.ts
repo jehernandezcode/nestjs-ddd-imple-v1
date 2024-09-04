@@ -3,7 +3,7 @@ export class CreateUserDtoRequest {
   lastName: string;
   email: string;
   password: string;
-  role: string;
+  roleId: string;
 }
 
 export class UpdateUserDtoRequest extends CreateUserDtoRequest {}

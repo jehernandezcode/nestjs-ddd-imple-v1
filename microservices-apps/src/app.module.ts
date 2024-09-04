@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { enviroments } from './environments';
 import config from './config';
 import * as Joi from 'joi';
-import { UserModule } from './application/user/user.module';
+import { InfraestructureModule } from './infraestructure/infraestructure.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { UserModule } from './application/user/user.module';
         SSL_KEY_PATH: Joi.string(),
       }),
     }),
-    UserModule,
+    InfraestructureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
