@@ -1,4 +1,4 @@
-import { User } from 'src/domain/user/user.model';
+import { User } from '../../../domain/user/user.model';
 import { CreateUserDtoRequest } from '../dto/user-dto.request';
 
 export interface ICreateUserUseCase {
