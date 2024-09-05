@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+
+import { IDeleteUserCase } from '../interfaces/Idelete-user-case';
 import {
   IUserService,
   IUserServiceToken,
-} from '../../../domain/user/interface/IUserService';
-import { IDeleteUserCase } from '../interfaces/Idelete-user-case';
+} from 'src/user/domain/interface/IUserService';
 
 @Injectable()
 export class DeleteUserByIdUseCase implements IDeleteUserCase {

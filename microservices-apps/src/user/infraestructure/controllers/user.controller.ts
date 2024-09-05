@@ -11,24 +11,24 @@ import {
 import {
   CreateUserDtoRequest,
   UpdateUserDtoRequest,
-} from '../../application/user/dto/user-dto.request';
+} from 'src/user/application/dto/user-dto.request';
 import {
   ICreateUserUseCase,
   ICreateUserUseCaseToken,
-} from '../../application/user/interfaces/Icreate-user-use-case';
+} from 'src/user/application/interfaces/Icreate-user-use-case';
 import {
   IDeleteUserCase,
   IDeleteUserCaseToken,
-} from '../../application/user/interfaces/Idelete-user-case';
+} from 'src/user/application/interfaces/Idelete-user-case';
 import {
   IFindUserByIdUseCase,
   IFindUserByIdUseCaseToken,
-} from '../../application/user/interfaces/Ifind-user-by-id-use-case';
+} from 'src/user/application/interfaces/Ifind-user-by-id-use-case';
 import {
   IUpdateUserCase,
   IUpdateUserCaseToken,
-} from '../../application/user/interfaces/Iupdate-user-case';
-import { User } from '../../domain/user/user.model';
+} from 'src/user/application/interfaces/Iupdate-user-case';
+import { User } from 'src/user/domain/user.model';
 
 @Controller('users')
 export class UserController {

@@ -5,8 +5,9 @@ import * as Joi from 'joi';
 import config from './config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
-import { InfraestructureModule } from './infraestructure/infraestructure.module';
 import { enviroments } from './environments';
+import { UserModule } from './user/user.module';
+import { TypeormModule } from './shared/database/typeorm/typeorm.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { enviroments } from './environments';
         SSL_KEY_PATH: Joi.string(),
       }),
     }),
-    InfraestructureModule,
+    TypeormModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

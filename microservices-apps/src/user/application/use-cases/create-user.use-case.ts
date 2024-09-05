@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDtoRequest } from '../dto/user-dto.request';
-import { User } from '../../../domain/user/user.model';
+
+import { ICreateUserUseCase } from '../interfaces/Icreate-user-use-case';
 import {
   IUserService,
   IUserServiceToken,
-} from '../../../domain/user/interface/IUserService';
-import { ICreateUserUseCase } from '../interfaces/Icreate-user-use-case';
+} from 'src/user/domain/interface/IUserService';
+import { User } from 'src/user/domain/user.model';
 
 @Injectable()
 export class CreateUserUseCase implements ICreateUserUseCase {

@@ -1,4 +1,4 @@
-import { User } from '../../../domain/user/user.model';
+import { User } from 'src/user/domain/user.model';
 
 export interface IFindUserByIdUseCase {
   execute(id: string): Promise<User>;

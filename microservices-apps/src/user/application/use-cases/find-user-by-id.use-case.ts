@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '../../../domain/user/user.model';
+
+import { IFindUserByIdUseCase } from '../interfaces/Ifind-user-by-id-use-case';
 import {
   IUserService,
   IUserServiceToken,
-} from '../../../domain/user/interface/IUserService';
-import { IFindUserByIdUseCase } from '../interfaces/Ifind-user-by-id-use-case';
+} from 'src/user/domain/interface/IUserService';
+import { User } from 'src/user/domain/user.model';
 
 @Injectable()
 export class FindUserByIdUseCase implements IFindUserByIdUseCase {

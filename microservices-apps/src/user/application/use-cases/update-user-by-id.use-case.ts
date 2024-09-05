@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '../../../domain/user/user.model';
+
+import { IUpdateUserCase } from '../interfaces/Iupdate-user-case';
+import { UpdateUserDtoRequest } from '../dto/user-dto.request';
 import {
   IUserService,
   IUserServiceToken,
-} from '../../../domain/user/interface/IUserService';
-import { IUpdateUserCase } from '../interfaces/Iupdate-user-case';
-import { UpdateUserDtoRequest } from '../dto/user-dto.request';
+} from 'src/user/domain/interface/IUserService';
+import { User } from 'src/user/domain/user.model';
 
 @Injectable()
 export class UpdateUserByIdUseCase implements IUpdateUserCase {

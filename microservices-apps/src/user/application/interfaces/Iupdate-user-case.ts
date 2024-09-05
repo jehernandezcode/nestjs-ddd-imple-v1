@@ -1,4 +1,4 @@
-import { User } from '../../../domain/user/user.model';
+import { User } from 'src/user/domain/user.model';
 import { UpdateUserDtoRequest } from '../dto/user-dto.request';
 
 export interface IUpdateUserCase {
