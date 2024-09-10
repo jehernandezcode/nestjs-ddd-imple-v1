@@ -9,12 +9,14 @@ import { enviroments } from './environments';
 import { UserModule } from './user/user.module';
 import { TypeormModule } from './shared/database/typeorm/typeorm.module';
 import { RoleModule } from './role/role.module';
+import { databaseEnvValidationSchema } from './shared/database/typeorm/validations/validations';
+import configDB from './shared/database/typeorm/configDB';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
-      load: [config],
+      load: [config, configDB],
       isGlobal: true,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().required(),
@@ -22,7 +24,7 @@ import { RoleModule } from './role/role.module';
         HTTPS_PORT: Joi.number().required(),
         SSL_CERT_PATH: Joi.string(),
         SSL_KEY_PATH: Joi.string(),
-      }),
+      }).concat(databaseEnvValidationSchema),
     }),
     TypeormModule,
     UserModule,
