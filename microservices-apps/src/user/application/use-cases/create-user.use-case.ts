@@ -5,8 +5,8 @@ import { ICreateUserUseCase } from '../interfaces/Icreate-user-use-case';
 import {
   IUserService,
   IUserServiceToken,
-} from 'src/user/domain/interface/IUserService';
-import { User } from 'src/user/domain/user.model';
+} from '../../domain/interface/IUserService';
+import { User } from '../../domain/user.model';
 
 @Injectable()
 export class CreateUserUseCase implements ICreateUserUseCase {
@@ -21,6 +21,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
       createUserDto.lastName,
       createUserDto.email,
       createUserDto.password,
+      createUserDto.roleId,
     );
     return this.userService.create(newUser);
   }

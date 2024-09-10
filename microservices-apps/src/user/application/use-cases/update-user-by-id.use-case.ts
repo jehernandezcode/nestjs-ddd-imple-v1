@@ -5,8 +5,8 @@ import { UpdateUserDtoRequest } from '../dto/user-dto.request';
 import {
   IUserService,
   IUserServiceToken,
-} from 'src/user/domain/interface/IUserService';
-import { User } from 'src/user/domain/user.model';
+} from '../../domain/interface/IUserService';
+import { User } from '../../domain/user.model';
 
 @Injectable()
 export class UpdateUserByIdUseCase implements IUpdateUserCase {
@@ -24,6 +24,7 @@ export class UpdateUserByIdUseCase implements IUpdateUserCase {
       updateUserDto?.lastName,
       updateUserDto?.email,
       updateUserDto?.password,
+      updateUserDto?.roleId,
     );
     return this.userService.update(id, newData);
   }

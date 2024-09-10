@@ -1,5 +1,11 @@
-// infrastructure/persistence/typeorm/entities/user.entity.ts
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { RoleEntity } from '../../../../../role/infraestructure/database/entities/role.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
@@ -17,4 +23,11 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @Column()
+  roleId: string;
+
+  @ManyToOne(() => RoleEntity)
+  @JoinColumn({ name: 'roleId' })
+  role: RoleEntity;
 }

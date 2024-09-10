@@ -13,9 +13,10 @@ import { UserService } from 'src/user/domain/user.service';
 import { UserController } from 'src/user/infraestructure/controllers/user.controller';
 import { UserEntity } from './infraestructure/database/typeorm/enties/user.entity';
 import { TypeORMUserRepository } from './infraestructure/database/typeorm/repositories/typeorm-user.repository';
+import { RoleEntity } from 'src/role/infraestructure/database/entities/role.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity, RoleEntity])],
   providers: [
     {
       provide: 'USER_REPOSITORY',
