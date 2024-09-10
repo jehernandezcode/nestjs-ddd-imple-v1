@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { enviroments } from './environments';
 import { UserModule } from './user/user.module';
 import { TypeormModule } from './shared/database/typeorm/typeorm.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TypeormModule } from './shared/database/typeorm/typeorm.module';
     }),
     TypeormModule,
     UserModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
