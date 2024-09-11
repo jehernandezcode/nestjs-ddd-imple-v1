@@ -11,5 +11,6 @@ export default registerAs('config', () => {
       ssl_cert_path: process.env.SSL_CERT_PATH,
       ssl_key_path: process.env.SSL_KEY_PATH,
     },
+    databases: process.env.DATABASES,
   };
 });
