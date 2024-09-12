@@ -47,14 +47,55 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
+# development mode
 $ npm run start:dev
+
+# stag mode
+$ npm run start:stag
 
 # production mode
 $ npm run start:prod
+```
+
+## generate migrations
+
+Important: Run npm run build previus migrations scripts
+
+```bash
+# development
+$ npm run migration:generate:dev ./src/shared/database/migrations/your_migration
+
+# watch mode
+$ npm run migration:generate:stag ./src/shared/database/migrations your_migration
+
+# production mode
+$ npm run migration:generate:prod ./src/shared/database/migrations/your_migration
+```
+
+## Running migrations
+
+```bash
+# development
+$ npm run migration:run:dev
+
+# watch mode
+$ npm run migration:run:stag
+
+# production mode
+$ npm run migration:run:prod
+```
+
+## Revert migrations
+
+```bash
+# development
+$ npm run migration:revert:dev
+
+# watch mode
+$ npm run migration:revert:stag
+
+# production mode
+$ npm run migration:revert:prod
 ```
 
 ## Running the docker container
@@ -83,7 +124,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
