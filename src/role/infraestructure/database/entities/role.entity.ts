@@ -14,6 +14,6 @@ export class RoleEntity {
   })
   role: ERole;
 
-  @Column()
+  @Column({ length: 50 })
   name: string;
 }

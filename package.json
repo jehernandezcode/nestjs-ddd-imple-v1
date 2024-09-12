@@ -1,5 +1,5 @@
 {
-  "name": "microservices-apps",
+  "name": "ddd-nestjs",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -22,7 +22,18 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:dev": "docker-compose --env-file .env up -d --build",
     "docker:stag": "docker-compose --env-file .stag.env up -d --build",
-    "docker:prod": "docker-compose --env-file .prod.env up -d --build"
+    "docker:prod": "docker-compose --env-file .prod.env up -d --build",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:run:dev": "cross-env NODE_ENV=dev npm run typeorm migration:run -- -d ./src/shared/database/typeorm/type-orm.config.ts",
+    "migration:run:stag": "cross-env NODE_ENV=stag npm run typeorm migration:run -- -d ./src/shared/database/typeorm/type-orm.config.ts",
+    "migration:run:prod": "cross-env NODE_ENV=prod npm run typeorm migration:run -- -d ./src/shared/database/typeorm/type-orm.config.ts",
+    "migration:generate:dev": "cross-env NODE_ENV=dev npm run typeorm -- -d ./src/shared/database/typeorm/type-orm.config.ts migration:generate",
+    "migration:generate:stag": "cross-env NODE_ENV=stag npm run typeorm -- -d ./src/shared/database/typeorm/type-orm.config.ts migration:generate",
+    "migration:generate:prod": "cross-env NODE_ENV=prod npm run typeorm -- -d ./src/shared/database/typeorm/type-orm.config.ts migration:generate",
+    "migration:create": "npm run typeorm -- migration:create",
+    "migration:revert:dev": "cross-env NODE_ENV=dev npm run typeorm -- -d ./src/shared/database/typeorm/type-orm.config.ts migration:revert",
+    "migration:revert:stag": "cross-env NODE_ENV=stag npm run typeorm -- -d ./src/shared/database/typeorm/type-orm.config.ts migration:revert",
+    "migration:revert:prod": "cross-env NODE_ENV=prod npm run typeorm -- -d ./src/shared/database/typeorm/type-orm.config.ts migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
