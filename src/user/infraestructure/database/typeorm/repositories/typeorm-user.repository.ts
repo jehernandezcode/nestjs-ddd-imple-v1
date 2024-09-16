@@ -12,7 +12,7 @@ export class TypeORMUserRepository implements IUserRepository {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  async create(user: User): Promise<User> {
+  async create(user: User): Promise<any> {
     const userEntity = this.userRepository.create({
       firstName: user.firstName,
       lastName: user.lastName,
@@ -25,12 +25,12 @@ export class TypeORMUserRepository implements IUserRepository {
     return { ...userSaved };
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<any | null> {
     const user = await this.userRepository.findOne({ where: { id } });
     return { ...user };
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<any | null> {
     const user = await this.userRepository.findOne({
       where: { email },
     });
