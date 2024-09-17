@@ -11,6 +11,7 @@ import { TypeormModule } from './shared/database/typeorm/typeorm.module';
 import { RoleModule } from './role/role.module';
 import { databaseEnvValidationSchema } from './shared/database/typeorm/validations/validations';
 import configDB from './shared/database/typeorm/configDB';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import configDB from './shared/database/typeorm/configDB';
     TypeormModule,
     UserModule,
     RoleModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
