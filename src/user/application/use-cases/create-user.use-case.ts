@@ -7,7 +7,7 @@ import {
   IUserServiceToken,
 } from '../../domain/interface/IUserService';
 import { User } from '../../domain/user.model';
-import { BcryptHashService } from 'src/shared/bcrypt/bcryptHash.service';
+import { BcryptHashService } from '../../../shared/bcrypt/bcryptHash.service';
 
 @Injectable()
 export class CreateUserUseCase implements ICreateUserUseCase {

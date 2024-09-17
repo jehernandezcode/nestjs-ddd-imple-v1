@@ -4,7 +4,7 @@ import { IDeleteUserCase } from '../interfaces/Idelete-user-case';
 import {
   IUserService,
   IUserServiceToken,
-} from 'src/user/domain/interface/IUserService';
+} from '../../domain/interface/IUserService';
 
 @Injectable()
 export class DeleteUserByIdUseCase implements IDeleteUserCase {
