@@ -26,6 +26,151 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Current Project Structure
+
+```plaintext
+src
+|   app.controller.spec.ts
+|   app.controller.ts
+|   app.module.ts
+|   app.service.ts
+|   config.ts
+|   environments.ts
+|   estructura.txt
+|   main.ts
+|   
++---auth
+|   |   auth.module.ts
+|   |   
+|   +---application
+|   |   +---dto
+|   |   |       login.dto.ts
+|   |   |       refresh-token.dto.ts
+|   |   |       
+|   |   +---interfaces
+|   |   |       IGet-user-id-token-auth-use-case.ts
+|   |   |       Ilogin-auth-use-case.ts
+|   |   |       IRefresh-token-auth-use-case.ts
+|   |   |       IValidate-token-auth-use-case.ts
+|   |   |       
+|   |   \---use-cases
+|   |           get-user-id-token-auth.use-case.ts
+|   |           login-auth.use-case.ts
+|   |           refresh-token-auth.use.case.ts
+|   |           validate-token-auth.use.case.ts
+|   |           
+|   +---domain
+|   |   |   auth-response.ts
+|   |   |   
+|   |   +---interface
+|   |   |       IAuthStrategy.ts
+|   |   |       
+|   |   \---services
+|   |           auth.service.ts
+|   |           
+|   \---infraestructure
+|       +---controllers
+|       |       auth.controller.ts
+|       |       
+|       \---strategies
+|               jwt-auth.strategy.ts
+|               
++---role
+|   |   role.module.ts
+|   |   
+|   +---application
+|   |   +---dto
+|   |   |       role-dto.request.ts
+|   |   |       
+|   |   +---interfaces
+|   |   |       Icreate-role-case.ts
+|   |   |       Idelete-by-id-role-case.ts
+|   |   |       Ifind-by-id-role-case.ts
+|   |   |       
+|   |   \---use-cases
+|   |           create-role.use-case.ts
+|   |           delete-by-id-role.use-case.ts
+|   |           find-by-id-role.use-case.ts
+|   |           
+|   +---domain
+|   |   |   role.model.ts
+|   |   |   role.repository.ts
+|   |   |   role.service.ts
+|   |   |   
+|   |   \---interface
+|   |           IRoleService.ts
+|   |           
+|   \---infraestructure
+|       +---controllers
+|       |       role.controller.ts
+|       |       
+|       \---database
+|           +---entities
+|           |       role.entity.ts
+|           |       
+|           \---repositories
+|                   typeorm.role.repository.ts
+|                   
++---shared
+|   +---bcrypt
+|   |       bcryptHash.service.ts
+|   |       
+|   +---database
+|   |   +---migrations
+|   |   \---typeorm
+|   |       |   configDB.ts
+|   |       |   type-orm.config.ts
+|   |       |   typeorm.module.ts
+|   |       |   
+|   |       \---validations
+|   |               validations.ts
+|   |               
+|   \---enums
+|           EnumRole.ts
+|           
+\---user
+    |   user.module.ts
+    |   
+    +---application
+    |   +---dto
+    |   |       user-dto.request.ts
+    |   |       
+    |   +---interfaces
+    |   |       Icreate-user-use-case.ts
+    |   |       Idelete-user-case.ts
+    |   |       Ifind-user-by-id-use-case.ts
+    |   |       Iupdate-user-case.ts
+    |   |       
+    |   \---use-cases
+    |           create-user.use-case.ts
+    |           delete-user-by-id.use-case.ts
+    |           find-user-by-id.use-case.ts
+    |           update-user-by-id.use-case.ts
+    |           
+    +---domain
+    |   |   user.model.ts
+    |   |   
+    |   +---interface
+    |   |       IUserService.ts
+    |   |       user.repository.ts
+    |   |       
+    |   \---services
+    |           user.service.ts
+    |           
+    \---infraestructure
+        +---controllers
+        |       user.controller.ts
+        |       
+        \---database
+            \---typeorm
+                +---enties
+                |       user.entity.ts
+                |       
+                \---repositories
+                        typeorm-user.repository.ts
+
+```
+
 ## Tech Stack
 
 **Client:** Http (Chrome, Edge, ...), Postman
