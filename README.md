@@ -24,7 +24,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This repository is a proof of concept in the implementation of a DDD architecture and the adoption of hexagonal use cases. In addition to other good practices to achieve quality software.
+
+Backend system for a movie reservation service. The service will allow users to sign up, log in, browse movies, reserve seats for specific showtimes, and manage their reservations. The system will feature user authentication, movie and showtime management, seat reservation functionality, and reporting on reservations.
 
 ## Current Project Structure
 
