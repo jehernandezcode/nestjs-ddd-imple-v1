@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   async getUserIdFromToken(token: string): Promise<string | null> {
-    return this.authStrategy.getUserIdFromToken(token);
+    return this.authStrategy.getSubFromToken(token);
   }
 
   async refreshTokens(refreshToken: string): Promise<AuthResult> {
