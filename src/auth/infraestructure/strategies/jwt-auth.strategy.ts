@@ -3,20 +3,27 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import { AuthResult } from '../../../auth/domain/auth-response';
-import { IAuthStrategy } from '../../../auth/domain/interface/IAuthStrategy';
+import { IAuthStrategyWithRole } from '../../../auth/domain/interface/IAuthStrategy';
 import {
   IUserRepository,
   USER_REPOSITORY,
 } from '../../../user/domain/interface/user.repository';
 import { BcryptHashService } from '../../../shared/bcrypt/bcryptHash.service';
+import {
+  IRoleRepository,
+  ROLE_REPOSITORY,
+} from 'src/role/domain/role.repository';
+import { ERole } from 'src/shared/enums/EnumRole';
 
 @Injectable()
-export class JwtAuthStrategy implements IAuthStrategy {
+export class JwtAuthStrategy implements IAuthStrategyWithRole {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
     @Inject(USER_REPOSITORY)
     private userRepository: IUserRepository,
+    @Inject(ROLE_REPOSITORY)
+    private roleRepository: IRoleRepository,
     private bcryptHashService: BcryptHashService,
   ) {}
 
@@ -46,10 +53,10 @@ export class JwtAuthStrategy implements IAuthStrategy {
     }
   }
 
-  async getUserIdFromToken(token: string): Promise<string | null> {
+  async getSubFromToken(token: string): Promise<string | null> {
     try {
       const payload = await this.jwtService.verifyAsync(token);
-      return payload.sub;
+      return payload;
     } catch {
       return null;
     }
@@ -74,5 +81,10 @@ export class JwtAuthStrategy implements IAuthStrategy {
       { expiresIn: this.configService.get('EXPIRES_REFRESH_TOKEN_IN') },
     );
     return new AuthResult(accessToken, refreshToken, 900);
+  }
+
+  async validateRole(roleId: string, allowedRoles: ERole[]): Promise<boolean> {
+    const { role } = await this.roleRepository.findById(roleId);
+    return allowedRoles.includes(role);
   }
 }

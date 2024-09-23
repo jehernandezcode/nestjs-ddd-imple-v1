@@ -13,6 +13,6 @@ export class GetUserIdTokenAuthUseCase implements IGetUserIdTokenAuthUseCase {
   ) {}
 
   async execute(token: string): Promise<string | null> {
-    return this.authService.getUserIdFromToken(token);
+    return this.authService.getSubFromToken(token);
   }
 }

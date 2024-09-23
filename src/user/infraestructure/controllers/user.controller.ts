@@ -7,28 +7,33 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '../../../shared/guards/auth/auth.guard';
 import {
   CreateUserDtoRequest,
   UpdateUserDtoRequest,
-} from 'src/user/application/dto/user-dto.request';
+} from '../../application/dto/user-dto.request';
 import {
   ICreateUserUseCase,
   ICreateUserUseCaseToken,
-} from 'src/user/application/interfaces/Icreate-user-use-case';
+} from '../../application/interfaces/Icreate-user-use-case';
 import {
   IDeleteUserCase,
   IDeleteUserCaseToken,
-} from 'src/user/application/interfaces/Idelete-user-case';
+} from '../../application/interfaces/Idelete-user-case';
 import {
   IFindUserByIdUseCase,
   IFindUserByIdUseCaseToken,
-} from 'src/user/application/interfaces/Ifind-user-by-id-use-case';
+} from '../../application/interfaces/Ifind-user-by-id-use-case';
 import {
   IUpdateUserCase,
   IUpdateUserCaseToken,
-} from 'src/user/application/interfaces/Iupdate-user-case';
-import { User } from 'src/user/domain/user.model';
+} from '../../application/interfaces/Iupdate-user-case';
+import { User } from '../../domain/user.model';
+import { Roles } from '../../../shared/decorators/role/role.decorator';
+import { ERole } from '../../../shared/enums/EnumRole';
+import { RoleGuard } from '../../../shared/guards/auth/role.guard';
 
 @Controller('users')
 export class UserController {
@@ -48,11 +53,15 @@ export class UserController {
     return await this.createUserUseCase.execute(user);
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @Roles(ERole.admin, ERole.client)
   @Get('/:id')
   async findById(@Param('id') id: string): Promise<User> {
     return await this.findUserUseCase.execute(id);
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @Roles(ERole.admin, ERole.client)
   @Put('/:id')
   async update(
     @Param('id') id: string,
@@ -62,6 +71,8 @@ export class UserController {
   }
 
   @Delete('/:id')
+  @UseGuards(AuthGuard, RoleGuard)
+  @Roles(ERole.admin, ERole.client)
   async delete(@Param('id') id: string): Promise<void> {
     return await this.deleteUserUseCase.execute(id);
   }

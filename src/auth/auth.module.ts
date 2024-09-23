@@ -18,6 +18,12 @@ import { UserEntity } from '../user/infraestructure/database/typeorm/enties/user
 import { BcryptHashService } from '../shared/bcrypt/bcryptHash.service';
 import { IRefreshTokenAuthUseCaseToken } from './application/interfaces/IRefresh-token-auth-use-case';
 import { RefreshTokenAuthUseCase } from './application/use-cases/refresh-token-auth.use.case';
+import { RoleEntity } from '../role/infraestructure/database/entities/role.entity';
+import {
+  IRoleRepository,
+  ROLE_REPOSITORY,
+} from '../role/domain/role.repository';
+import { TypeORMRoleRepository } from '../role/infraestructure/database/repositories/typeorm.role.repository';
 
 @Module({
   imports: [
@@ -32,7 +38,7 @@ import { RefreshTokenAuthUseCase } from './application/use-cases/refresh-token-a
       inject: [ConfigService],
     }),
     ConfigModule,
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity, RoleEntity]),
   ],
   providers: [
     {
@@ -52,6 +58,10 @@ import { RefreshTokenAuthUseCase } from './application/use-cases/refresh-token-a
       useClass: TypeORMUserRepository,
     },
     {
+      provide: ROLE_REPOSITORY,
+      useClass: TypeORMRoleRepository,
+    },
+    {
       provide: BcryptHashService,
       useFactory: () => BcryptHashService.getInstance(),
     },
@@ -61,6 +71,7 @@ import { RefreshTokenAuthUseCase } from './application/use-cases/refresh-token-a
         configService: ConfigService,
         jwtService: JwtService,
         userRepository: IUserRepository,
+        roleRepository: IRoleRepository,
         bcryptHashService: BcryptHashService,
       ) => {
         const authStrategy = configService.get('AUTH_STRATEGY');
@@ -69,15 +80,23 @@ import { RefreshTokenAuthUseCase } from './application/use-cases/refresh-token-a
             jwtService,
             configService,
             userRepository,
+            roleRepository,
             bcryptHashService,
           );
         } else {
           throw new Error('Invalid auth strategy');
         }
       },
-      inject: [ConfigService, JwtService, USER_REPOSITORY, BcryptHashService],
+      inject: [
+        ConfigService,
+        JwtService,
+        USER_REPOSITORY,
+        ROLE_REPOSITORY,
+        BcryptHashService,
+      ],
     },
   ],
   controllers: [AuthController],
+  exports: ['AuthStrategy'],
 })
 export class AuthModule {}
